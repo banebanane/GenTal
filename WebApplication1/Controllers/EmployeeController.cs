@@ -19,9 +19,9 @@ namespace WebApplication1.Controllers
 		}
 	}
 
-    public class TestController : Controller
-    {
-        public Customer GetCustomer()
+	public class EmployeeController : Controller
+	{
+		public Customer GetCustomer()
 		{
 			Customer c = new Customer();
 			c.Customername = "Customer 1";
@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
 			return c;
 		}
 
-		public ActionResult GetView()
+		public ActionResult Index()
 		{
 			EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel();
 
@@ -55,9 +55,28 @@ namespace WebApplication1.Controllers
 				empViewModels.Add(empViewModel);
 			}
 			employeeListViewModel.Employees = empViewModels;
-			employeeListViewModel.UserName = "Admin";
-			return View("MyView", employeeListViewModel);
+
+			return View("Index", employeeListViewModel);
 
 		}
-    }
+
+        public ActionResult AddNew()
+        {
+            return View("CreateEmployee");
+        }
+
+        public ActionResult SaveEmployee(Employee e, string BtnSubmit)
+        {
+            switch (BtnSubmit)
+            {
+                case "Save Employee":
+                    EmployeeBusinessLayer empBal = new EmployeeBusinessLayer();
+                    empBal.SaveEmployee(e);
+                    return RedirectToAction("Index");
+                case "Cancel":
+                    return RedirectToAction("Index");
+            }
+            return new EmptyResult();
+        }
+	}
 }

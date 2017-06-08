@@ -31,8 +31,13 @@ namespace WebApplication1.Models
 			employees.Add(emp);
 
 			return employees;*/
-			SalesERPDAL salesDal = new SalesERPDAL();
-			return salesDal.selectQuery("SELECT * FROM Employee");
+
+			return SalesERPDAL.GetEmployees();
+		}
+
+		public void SaveEmployee(Employee e)
+		{
+			SalesERPDAL.SaveEmployee(e);
 		}
 
 	}
